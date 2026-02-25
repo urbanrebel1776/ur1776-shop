@@ -30,6 +30,22 @@ body {
   line-height: 1.55;
 }
 
+/* Radial gradient utility */
+.bg-gradient-radial {
+  background: radial-gradient(ellipse at center, var(--tw-gradient-stops));
+}
+@supports (background: radial-gradient(circle, black, transparent)) {
+  .from-black\/50 {
+    --tw-gradient-from: rgb(0 0 0 / 0.5);
+    --tw-gradient-to: rgb(0 0 0 / 0);
+    --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+  }
+  .via-black\/30 {
+    --tw-gradient-to: rgb(0 0 0 / 0);
+    --tw-gradient-stops: var(--tw-gradient-from), rgb(0 0 0 / 0.3), var(--tw-gradient-to);
+  }
+}
+
 /* Typography */
 .font-display {
   font-family: 'Montserrat', sans-serif;

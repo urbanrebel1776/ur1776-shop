@@ -13,6 +13,7 @@ const HeroSection = () => {
   const imgDRef = useRef<HTMLDivElement>(null);
   const headlineRef = useRef<HTMLDivElement>(null);
   const ctaRef = useRef<HTMLDivElement>(null);
+  const overlayRef = useRef<HTMLDivElement>(null);
 
   useLayoutEffect(() => {
     const section = sectionRef.current;
@@ -40,6 +41,14 @@ const HeroSection = () => {
         );
       }
 
+      // Overlay fade in
+      loadTl.fromTo(
+        overlayRef.current,
+        { opacity: 0 },
+        { opacity: 1, duration: 0.8, ease: 'power2.out' },
+        '-=0.6'
+      );
+
       // Subheadline and CTAs
       loadTl.fromTo(
         ctaRef.current,
@@ -63,6 +72,7 @@ const HeroSection = () => {
             });
             gsap.set(headlineRef.current, { opacity: 1, y: 0 });
             gsap.set(ctaRef.current, { opacity: 1, y: 0 });
+            gsap.set(overlayRef.current, { opacity: 1 });
           }
         }
       });
@@ -70,6 +80,14 @@ const HeroSection = () => {
       // ENTRANCE (0% - 30%): Keep at settle state (load animation handled it)
       // SETTLE (30% - 70%): Hold static
       // EXIT (70% - 100%): Elements exit
+
+      // Overlay exits
+      scrollTl.fromTo(
+        overlayRef.current,
+        { opacity: 1 },
+        { opacity: 0, ease: 'power2.in' },
+        0.70
+      );
 
       // Headline exits upward
       scrollTl.fromTo(
@@ -132,6 +150,15 @@ const HeroSection = () => {
       {/* Micro label at top */}
       <div className="absolute top-[4vh] left-1/2 -translate-x-1/2 z-10">
         <span className="micro-label text-[#A6ACB6]">NEW SEASON — WORLDWIDE SHIPPING</span>
+      </div>
+
+      {/* Center Content Overlay - Behind text but above images */}
+      <div
+        ref={overlayRef}
+        className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[80vw] h-[60vh] pointer-events-none"
+        style={{ zIndex: 4 }}
+      >
+        <div className="absolute inset-0 bg-gradient-radial from-black/50 via-black/30 to-transparent backdrop-blur-[2px]" />
       </div>
 
       {/* Collage Images */}
